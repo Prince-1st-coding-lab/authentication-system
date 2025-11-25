@@ -9,8 +9,17 @@ const port = 8000;
 app.use(express.json())
 app.use(express.static(path.join(__dirname,'public')))
 
+app.get('/',(req,res)=>{
 
-//API FOR LOG IN
+    db.query('select * from users',(err,rows)=>{
+        if(err){
+           res.json({message:`there is error in database ${err}`});
+        }else{
+        res.send(rows)
+        }
+    })
+})
+//API FOR register
 app.post('/api/register',async(req,res)=>{
     const {email,password,permission} = req.body;
 
@@ -28,6 +37,39 @@ app.post('/api/register',async(req,res)=>{
         }
     })
 })
+
+//API FOR LOG IN
+app.post('/api/login',(req,res)=>{
+    const {email,password} = req.body;
+    if(email==null||password==null){
+        return res.json({message:'please enter email and password'})
+    }
+    db.query('select * from users where email=?',[email],async(err,rows)=>{
+        if (err) {
+              return res.json({message:'there is error on database' + err})
+        }
+        if (rows.length == 0) {
+            return res.json({message:'the email or username does not exist'})
+        }
+
+        const user = rows[0];
+        const match = await bcrypt.compare(password,user.password);
+        if (!match) {
+             return res.json({message:'incorrect password'})
+        }
+        const token = jwt.sign({email:user.email,password:user.password},
+            process.env.JWT_SECRET,
+            {expiresIn:'1h'}
+        )
+        res.json({
+            message:"login sucessfully",
+            token:token
+        })
+
+    })
+
+})
+
 app.listen(port,()=>{
     console.log(`connected to express server ${port}`);
 })
