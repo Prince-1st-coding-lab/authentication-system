@@ -40,7 +40,9 @@ function login() {
         body:JSON.stringify(users)
     }).then(Response => Response.json())
     .then(data =>{
-        console.log(data);        
+        localStorage.setItem('token',data.token);
+        
     }).catch(Error =>  console.log(Error)
     )
 }
+//

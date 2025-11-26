@@ -10,14 +10,7 @@ app.use(express.json())
 app.use(express.static(path.join(__dirname,'public')))
 
 app.get('/',(req,res)=>{
-
-    db.query('select * from users',(err,rows)=>{
-        if(err){
-           res.json({message:`there is error in database ${err}`});
-        }else{
-        res.send(rows)
-        }
-    })
+    res.sendFile(path.join(__dirname,'public','login.html'));
 })
 //API FOR register
 app.post('/api/register',async(req,res)=>{
@@ -48,7 +41,7 @@ app.post('/api/login',(req,res)=>{
         if (err) {
               return res.json({message:'there is error on database' + err})
         }
-        
+
         if (rows.length == 0) {
             return res.json({message:'the email or username does not exist'})
         }
@@ -69,6 +62,18 @@ app.post('/api/login',(req,res)=>{
 
     })
 
+})
+
+//api for dashboard
+app.post('/api/dashboard',(req,res)=>{
+    const {token} = req.body;  
+    jwt.verify(token,process.env.JWT_SECRET,(err,decoded)=>{
+        if(err) return res.json({errorr:err})
+            res.json({
+        message:'the token is valid',
+        
+        })
+    })
 })
 
 app.listen(port,()=>{
