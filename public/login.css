@@ -61,7 +61,7 @@
     /* Right panel: form */
     .panel-form{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.015)); padding:22px;border-radius:12px;align-self:center}
 
-    form{display:flex;flex-direction:column;gap:12px}
+    .form{display:flex;flex-direction:column;gap:12px}
     label{font-size:0.85rem;color:var(--muted);display:block;margin-bottom:6px}
     .field{display:flex;flex-direction:column;gap:6px}
     input[type="email"],input[type="password"]{

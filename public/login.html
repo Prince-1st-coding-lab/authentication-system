@@ -45,15 +45,15 @@
       <h3 id="login-heading" style="margin:0 0 6px 0">Sign in to your account</h3>
       <p class="helper" style="margin:0 0 12px 0">Use your work email to sign in.</p>
 <!-- form data -->
-      <form action="#" method="post" novalidate>
-        <div class="field">
+      <div class="form">
+           <div class="field">
           <label for="email">Email</label>
-          <input id="email" name="email" type="email" placeholder="you@company.com" id="email-input" required aria-required="true" autocomplete="username" />
+          <input id="email-input" name="email" type="email" placeholder="you@company.com" id="email-input" required aria-required="true" autocomplete="username" />
         </div>
 
         <div class="field">
           <label for="password">Password</label>
-          <input id="password" name="password" type="password" placeholder="Enter your password" minlength="6" id="password-input" required aria-required="true" autocomplete="current-password" />
+          <input id="password-input" name="password" type="password" placeholder="Enter your password" minlength="6" id="password-input" required aria-required="true" autocomplete="current-password" />
         </div>
 
         <div class="actions">
@@ -61,7 +61,7 @@
           <a class="forgot" href="#">Forgot?</a>
         </div>
 
-        <button class="btn" type="submit">Sign in</button>
+        <button class="btn" type="submit" onclick="login()">Sign in</button>
 
         <div class="alt" aria-hidden="true">
           <div class="line"></div>
@@ -73,12 +73,11 @@
           <a href="#" title="Continue with Google">Google</a>
           <a href="#" title="Continue with GitHub">GitHub</a>
         </div>
-
-      </form>
+      </div>
 
     </section>
   </main>
 
-  <script src="login.js"></script>
+  <script src="auth.js"></script>
 </body>
 </html>

@@ -48,6 +48,7 @@ app.post('/api/login',(req,res)=>{
         if (err) {
               return res.json({message:'there is error on database' + err})
         }
+        
         if (rows.length == 0) {
             return res.json({message:'the email or username does not exist'})
         }

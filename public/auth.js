@@ -23,9 +23,24 @@ fetch('/api/register',{
 }).catch(Error => console.log('error while fetching ' + Error))
 }//end to register
 
+//fuction to make log in
 function login() {
     let email_input = document.querySelector('#email-input');
     let password_input = document.querySelector('#password-input');
     let remember_me = document.querySelector('#remember-me');
-    
+    const users={
+        email : email_input.value,
+        password : password_input.value
+    }
+    fetch('/api/login',{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify(users)
+    }).then(Response => Response.json())
+    .then(data =>{
+        console.log(data);        
+    }).catch(Error =>  console.log(Error)
+    )
 }
