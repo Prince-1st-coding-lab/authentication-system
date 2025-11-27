@@ -106,10 +106,16 @@
       text-align:center;
       color:var(--muted);
     }
+    .footer-text a{
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    
   </style>
 </head>
 <body>
-
+ <h1 style="font-size: 2rem;"><Em>Eyen<span style="color: crimson;">soft</span></Em></h1>
 <div class="bg-blur">
   <div class="blob a"></div>
   <div class="blob b"></div>
@@ -142,7 +148,7 @@
     <button class="btn" onclick="register()">Register</button>
   </div>
 
-  <div class="footer-text">Already have an account? Login</div>
+  <div class="footer-text">Already have an account? <a href="/login.html">login</a></div>
   <script src="auth.js"></script>
 </div>
 

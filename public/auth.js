@@ -43,10 +43,35 @@ function login() {
         body:JSON.stringify(users)
     }).then(Response => Response.json())
     .then(data => {
-        console.log(data);
         let message = document.querySelector('.message');
         message.innerHTML = '*'+ data.message;
         message.style.display = 'block';
+        if (data.token) {
+            // console.log(data);
+            
+            localStorage.setItem('token',data.token)
+            next_page();
+        }
         }).catch(Error => console.log(Error))
     
+}
+
+// to the next page
+function next_page() {
+    fetch('/api/verify',{
+        method:'POST',
+        headers:{
+            'Authorization':'Bearer '+ localStorage.getItem('token'),
+            'Content-Type':'application/json'
+        }
+    }).then(Response => Response.json())
+    .then(data =>{
+        if (data.next_page) {
+           setTimeout(() => {
+             return window.location.href = data.next_page;
+           }, 1000);
+
+        }
+        
+    }).catch(Error => console.log(Error))
 }

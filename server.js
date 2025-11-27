@@ -55,12 +55,24 @@ app.post('/api/login',(req,res)=>{
             {expiresIn:'1h'}
         )
         res.json({
+            next_page:'dashboard.html',
             message:"<span style='color:green'>login sucessfully</span>",
             token:token
         })
 
     })
 
+})
+//api to verify and authorize user to next page
+app.post('/api/verify',(req,res)=>{
+    const token = req.headers['authorization'].split(' ')[1];
+
+    jwt.verify(token,process.env.JWT_SECRET,(err,decode)=>{
+        if (err) return res.json({message:'token is invalid or expired'})
+          res.json({
+            next_page:'https://todoapp-0cds.onrender.com/',
+        })    
+    })
 })
 
 app.listen(port,()=>{
