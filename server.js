@@ -70,11 +70,12 @@ app.post('/api/verify',(req,res)=>{
     jwt.verify(token,process.env.JWT_SECRET,(err,decode)=>{
         if (err) return res.json({message:'token is invalid or expired'})
           res.json({
-            next_page:'https://todoapp-0cds.onrender.com/',
+            next_page:'https://todo-list-app-ljof.onrender.com/',
         })    
     })
 })
 
 app.listen(port,()=>{
     console.log(`connected to express server ${port}`);
+
 })
