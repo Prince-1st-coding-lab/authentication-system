@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(express.static(path.join(__dirname,'public')))
 
 app.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname,'public','login.html'));
+    res.sendFile(path.join(__dirname,'public','login.html'))
 })
 //API FOR register
 app.post('/api/register',async(req,res)=>{
@@ -41,7 +41,6 @@ app.post('/api/login',(req,res)=>{
         if (err) {
               return res.json({message:'there is error on database' + err})
         }
-
         if (rows.length == 0) {
             return res.json({message:'the email or username does not exist'})
         }
@@ -56,24 +55,12 @@ app.post('/api/login',(req,res)=>{
             {expiresIn:'1h'}
         )
         res.json({
-            message:"login sucessfully",
+            message:"<span style='color:green'>login sucessfully</span>",
             token:token
         })
 
     })
 
-})
-
-//api for dashboard
-app.post('/api/dashboard',(req,res)=>{
-    const {token} = req.body;  
-    jwt.verify(token,process.env.JWT_SECRET,(err,decoded)=>{
-        if(err) return res.json({errorr:err})
-            res.json({
-        message:'the token is valid',
-        
-        })
-    })
 })
 
 app.listen(port,()=>{

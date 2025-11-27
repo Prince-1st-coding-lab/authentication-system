@@ -19,16 +19,19 @@ fetch('/api/register',{
 .then(data =>{
     console.log(data); 
     email.value=''
-    password.value=''   
+    password.value=''
+    let message = document.querySelector('.message');
+    message.innerHTML = '*'+data.message; 
+    message.style.display = 'block'; 
 }).catch(Error => console.log('error while fetching ' + Error))
 }//end to register
 
-//fuction to make log in
+//to log in 
 function login() {
     let email_input = document.querySelector('#email-input');
     let password_input = document.querySelector('#password-input');
     let remember_me = document.querySelector('#remember-me');
-    const users={
+    const users ={
         email : email_input.value,
         password : password_input.value
     }
@@ -39,10 +42,11 @@ function login() {
         },
         body:JSON.stringify(users)
     }).then(Response => Response.json())
-    .then(data =>{
-        localStorage.setItem('token',data.token);
-        
-    }).catch(Error =>  console.log(Error)
-    )
+    .then(data => {
+        console.log(data);
+        let message = document.querySelector('.message');
+        message.innerHTML = '*'+ data.message;
+        message.style.display = 'block';
+        }).catch(Error => console.log(Error))
+    
 }
-//
