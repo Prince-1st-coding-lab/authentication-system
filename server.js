@@ -26,7 +26,7 @@ app.post('/api/register',async(req,res)=>{
         if(err){
            res.json({message:`there is error in database ${err}`});
         }else{
-        res.json({message:`registered successfully}`})
+        res.json({message:`<span style='color:green'>registered successfully</span>`})
         }
     })
 })
