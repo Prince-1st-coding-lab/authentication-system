@@ -34,7 +34,7 @@ app.post('/api/register',async(req,res)=>{
 //API FOR LOG IN
 app.post('/api/login',(req,res)=>{
     const {email,password} = req.body;
-    if(email==null||password==null){
+    if(!email|| !password){
         return res.json({message:'please enter email and password'})
     }
     db.query('select * from users where email=?',[email],async(err,rows)=>{
@@ -50,7 +50,7 @@ app.post('/api/login',(req,res)=>{
         if (!match) {
              return res.json({message:'incorrect password'})
         }
-        const token = jwt.sign({email:user.email,password:user.password},
+        const token = jwt.sign({email:user.email,permission:user.permission},
             process.env.JWT_SECRET,
             {expiresIn:'1h'}
         )
@@ -63,19 +63,42 @@ app.post('/api/login',(req,res)=>{
     })
 
 })
+
+
 //api to verify and authorize user to next page
-app.post('/api/verify',(req,res)=>{
+
+function verifyToken(req,res,next){
+    if(!req.headers['authorization']) return res.json({message:'no token'})
+
     const token = req.headers['authorization'].split(' ')[1];
 
-    jwt.verify(token,process.env.JWT_SECRET,(err,decode)=>{
+    jwt.verify(token,process.env.JWT_SECRET,(err,decoded)=>{
         if (err) return res.json({message:'token is invalid or expired'})
-          res.json({
-            next_page:'https://todo-list-app-ljof.onrender.com/',
-        })    
+          req.user = decoded;
+        next()
     })
+}
+
+app.post('/api/verify',verifyToken,(req,res)=>{
+       res.json({
+            next_page:'dashboard.html',
+        }) 
 })
 
+//admin panel authorization
+function onlyAdmin(req,res,next) {
+    if (req.user.permission !='admin') {
+      return res.json({message:'not admin authorize'})
+    }
+    next();
+}
+app.post('/api/admin',verifyToken,onlyAdmin,(req,res)=>{
+
+          res.json({
+            message:'you are admin',
+        })
+     
+})
 app.listen(port,()=>{
     console.log(`connected to express server ${port}`);
-
 })

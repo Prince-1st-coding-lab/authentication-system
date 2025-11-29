@@ -55,11 +55,20 @@
           <label for="password">Password</label>
           <input id="password-input" name="password" type="password" placeholder="Enter your password" minlength="6" id="password-input" required aria-required="true" autocomplete="current-password" />
         </div>
+          <div class="field">
+      <label for="role">Select Role</label>
+      <select id="role" name="role" required>
+        <option value="" disabled selected>Choose role</option>
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+      </select>
+    </div>
 
         <div class="actions">
-          <label class="remember"><input class="checkbox" type="checkbox" name="remember" aria-label="Remember me" id="remember-me" /> <span style="font-size:0.9rem;color:var(--muted)">Remember me</span></label>
+          
           <a class="forgot" href="#">Forgot?</a>
         </div>
+          
         <div class="message" style="display: none; color: red;"></div>
         <button class="btn" type="submit" onclick="login()">Sign in</button>
 

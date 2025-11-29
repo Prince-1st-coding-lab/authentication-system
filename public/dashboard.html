@@ -7,5 +7,24 @@
 </head>
 <body>
     <h1>at dashboard</h1>
+    <button onclick="admin()">check</button>
+    <script>
+   function admin(){
+     fetch('/api/admin',{
+        method:'POST',
+        headers:{
+            'Authorization':'Bearer '+ localStorage.getItem('token'),
+            'Content-Type':'application/json'
+        }
+    }).then(Response => Response.json())
+    .then(data =>{
+        document.write('<h1>'+ data.message +'</h1>')
+        // console.log(data);
+        
+        
+        }).catch(Error => console.log(Error))
+}
+admin();
+    </script>
 </body>
 </html>

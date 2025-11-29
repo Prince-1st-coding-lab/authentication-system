@@ -30,10 +30,11 @@ fetch('/api/register',{
 function login() {
     let email_input = document.querySelector('#email-input');
     let password_input = document.querySelector('#password-input');
-    let remember_me = document.querySelector('#remember-me');
+    let role = document.querySelector('#role');
     const users ={
         email : email_input.value,
-        password : password_input.value
+        password : password_input.value,
+        permission:role.value
     }
     fetch('/api/login',{
         method:'POST',
@@ -43,13 +44,14 @@ function login() {
         body:JSON.stringify(users)
     }).then(Response => Response.json())
     .then(data => {
-        let message = document.querySelector('.message');
-        message.innerHTML = '*'+ data.message;
-        message.style.display = 'block';
+        
         if (data.token) {
             // console.log(data);
-            
+         let message = document.querySelector('.message');
+        message.innerHTML = '*'+ data.message;
+        message.style.display = 'block';
             localStorage.setItem('token',data.token)
+            
             next_page();
         }
         }).catch(Error => console.log(Error))
